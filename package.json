@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "babel-plugin-react-rapid-prototyping",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/yszk0123/babel-plugin-react-rapid-prototyping",
+  "author": "Yuji Suzuki <y0suzuki0123@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "babel examples/index.js"
+  },
+  "dependencies": {
+    "babel-plugin-syntax-jsx": "^6.18.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0"
+  }
+}
