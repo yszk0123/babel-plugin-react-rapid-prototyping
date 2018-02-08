@@ -88,7 +88,7 @@ module.exports = ({ types: t }) => {
 
           // Wrap JSX in a function
           const asd = build({
-            NAME: t.identifier(name),
+            NAME: t.identifier(stripExtension(name)),
             BODY: path.node.body,
           });
           path.replaceWith(t.program(asd));
