@@ -1,1 +1,1 @@
-<label id="example">{props.name}</label>
+<label class="example">{props.name}</label>

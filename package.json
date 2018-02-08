@@ -7,7 +7,7 @@
   "author": "Yuji Suzuki <y0suzuki0123@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "babel examples/index.js"
+    "test": "babel examples/*.js"
   },
   "dependencies": {
     "babel-plugin-syntax-jsx": "^6.18.0"

@@ -1,4 +1,3 @@
-const fs = require('fs');
 const { basename, dirname } = require('path');
 const template = require('babel-template');
 const build = template(`
@@ -6,17 +5,8 @@ const build = template(`
     return BODY;
   };
 `);
-const dirCache = {
-  cache: new Map(),
-  get(dir) {
-    let filenames = this.cache.get(dir);
-    if (!filenames) {
-      filenames = fs.readdirSync(dir);
-      this.cache.set(dir, filenames);
-    }
-    return filenames;
-  },
-};
+// TODO: Plugin option
+const cssExtension = '.module.css';
 
 function stripExtension(file) {
   return file.replace(/\.[^.]+$/, '');
@@ -24,8 +14,9 @@ function stripExtension(file) {
 
 module.exports = ({ types: t }) => {
   const nestedVisitor = {
-    JSXAttribute(path) {
+    JSXAttribute(path, { file }) {
       if (path.node.name.name === 'class') {
+        file.set('needCSS', true);
         path.node.name.name = 'className';
         const exp = path.node.value.value
           .split(/\s+/)
@@ -58,7 +49,7 @@ module.exports = ({ types: t }) => {
       },
 
       JSXElement(path, { file }) {
-        path.traverse(nestedVisitor);
+        path.traverse(nestedVisitor, { file });
       },
 
       Program: {
@@ -84,7 +75,6 @@ module.exports = ({ types: t }) => {
 
           const name = stripExtension(basename(file.opts.filename));
           const dir = dirname(file.opts.filename);
-          const filenames = dirCache.get(dir);
 
           // Wrap JSX in a function
           const asd = build({
@@ -105,16 +95,16 @@ module.exports = ({ types: t }) => {
 
           // classNames
           const classImportDeclaration = t.importDeclaration(
-            [t.importDefaultSpecifier(t.identifier('classnames'))],
-            t.stringLiteral('classNames'),
+            [t.importDefaultSpecifier(t.identifier('classNames'))],
+            t.stringLiteral('classnames'),
           );
           imports.push(classImportDeclaration);
 
           // Styles
-          if (filenames.includes(`${name}.css`)) {
+          if (file.get('needCSS')) {
             const stylesImportDeclaration = t.importDeclaration(
               [t.importDefaultSpecifier(t.identifier('styles'))],
-              t.stringLiteral(`./${name}.css`),
+              t.stringLiteral(`./${name}${cssExtension}`),
             );
             imports.push(stylesImportDeclaration);
           }

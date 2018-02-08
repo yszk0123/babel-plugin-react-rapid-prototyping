@@ -8,7 +8,7 @@
 ```
 
 ```css
-/* MyComponent.css */
+/* MyComponent.module.css */
 .foo {
   color: red;
 }
@@ -18,7 +18,7 @@
 
 ```js
 import React from "react";
-import styles from "./MyComponent.css";
+import styles from "./MyComponent.module.css";
 
 export default function MyComponent() {
   return <div className={styles.foo}>Hello, world</div>;
