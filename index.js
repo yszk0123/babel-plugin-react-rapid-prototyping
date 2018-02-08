@@ -12,7 +12,8 @@ const dirCache = {
     let filenames = this.cache.get(dir);
     if (!filenames) {
       filenames = fs.readdirSync(dir);
-      this.cache.set(dir, filenames);
+      // TODO
+      // this.cache.set(dir, filenames);
     }
     return filenames;
   },
