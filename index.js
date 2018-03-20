@@ -2,8 +2,7 @@ const { basename, dirname } = require('path');
 const template = require('babel-template');
 const build = template(`
   ;export default function NAME(props) {
-    const result = (BODY);
-    return result;
+    return (BODY);
   }
 `, { sourceType: "module" });
 // TODO: Plugin option
