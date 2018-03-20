@@ -21,7 +21,7 @@ module.exports = ({ types: t }) => {
         const exp = path.node.value.value
           .split(/\s+/)
           .map(name =>
-            t.memberExpression(t.identifier('styles'), t.identifier(name)),
+            t.memberExpression(t.identifier('styles'), t.identifier(name))
           );
         path
           .get('value')
@@ -29,8 +29,8 @@ module.exports = ({ types: t }) => {
             t.jSXExpressionContainer(
               exp.length === 1
                 ? exp[0]
-                : t.callExpression(t.identifier('classNames'), exp),
-            ),
+                : t.callExpression(t.identifier('classNames'), exp)
+            )
           );
       } else if (path.node.name.name === 'for') {
         path.node.name.name = 'htmlFor';
@@ -60,7 +60,7 @@ module.exports = ({ types: t }) => {
             path.node.body &&
               path.node.body[0] &&
               path.node.body[0].expression &&
-              path.node.body[0].expression.type === 'JSXElement',
+              path.node.body[0].expression.type === 'JSXElement'
           );
         },
 
@@ -89,14 +89,14 @@ module.exports = ({ types: t }) => {
           // React
           const reactImportDeclaration = t.importDeclaration(
             [t.importDefaultSpecifier(t.identifier('React'))],
-            t.stringLiteral('react'),
+            t.stringLiteral('react')
           );
           imports.push(reactImportDeclaration);
 
           // classNames
           const classImportDeclaration = t.importDeclaration(
             [t.importDefaultSpecifier(t.identifier('classNames'))],
-            t.stringLiteral('classnames'),
+            t.stringLiteral('classnames')
           );
           imports.push(classImportDeclaration);
 
@@ -104,7 +104,7 @@ module.exports = ({ types: t }) => {
           if (file.get('needCSS')) {
             const stylesImportDeclaration = t.importDeclaration(
               [t.importDefaultSpecifier(t.identifier('styles'))],
-              t.stringLiteral(`./${name}${cssExtension}`),
+              t.stringLiteral(`./${name}${cssExtension}`)
             );
             imports.push(stylesImportDeclaration);
           }
@@ -113,7 +113,7 @@ module.exports = ({ types: t }) => {
           file.get('components').forEach(componentName => {
             const componentImportDeclaration = t.importDeclaration(
               [t.importDefaultSpecifier(t.identifier(componentName))],
-              t.stringLiteral(`./${componentName}`),
+              t.stringLiteral(`./${componentName}`)
             );
             imports.push(componentImportDeclaration);
           });
