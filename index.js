@@ -1,10 +1,11 @@
 const { basename, dirname } = require('path');
 const template = require('babel-template');
 const build = template(`
-  ;module.exports = function NAME(props) {
-    return BODY;
-  };
-`);
+  ;export default function NAME(props) {
+    const result = (BODY);
+    return result;
+  }
+`, { sourceType: "module" });
 // TODO: Plugin option
 const cssExtension = '.module.css';
 
